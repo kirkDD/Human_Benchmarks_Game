@@ -114,11 +114,19 @@ function endGame() {
   // clear and show score
   column_area.innerHTML = ''
   var hintEl = document.getElementById('hint')
-  hintEl.innerText = 'Score: ' +
-    (currentLevel - numErrorClicks)
+  var score = currentLevel - numErrorClicks
+  hintEl.innerText = 'Score: ' + score
   hintEl.style.opacity = 1
   // send data to server
   // todo
+  // a post request by server design
+  fetch("../../backend/php/server.php", {
+    method: 'POST',
+    body: JSON.stringify({
+      game_name: "minandmax",
+      score: score
+    })
+  })
 }
 
 // helpers

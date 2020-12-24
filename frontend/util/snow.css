@@ -1,0 +1,29 @@
+
+
+.s_sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.s_sky span {
+  position: absolute;
+  top: -10%;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 100%;
+  animation: falling linear infinite;
+  transition: all 5s;
+  transition-timing-function: cubic-bezier(.73,.3,.55,.93);
+}
+
+@keyframes falling {
+  0% {top: -10%}
+  95% {top: 99%}
+  100% {top: 99%}
+}
