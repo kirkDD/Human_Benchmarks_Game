@@ -4,9 +4,13 @@
 // add some elements
 
 // add css
+// use absolute path to css
+const repoName = "Human_Benchmarks_Game"
+var rootIndex = window.location.href.indexOf(repoName)
+var absPath = window.location.href.substr(0, rootIndex + repoName.length)
+var cssPath = absPath + '/frontend/util/snow.css'
 var head = document.getElementsByTagName('HEAD')[0];
-// use absolute path
-head.innerHTML += '<link rel="stylesheet" href="/frontend/util/snow.css">'
+head.innerHTML += '<link rel="stylesheet" href="' + cssPath + '">'
 // add meat
 var s_sky = document.createElement('div')
 s_sky.className = 's_sky'
