@@ -4,15 +4,22 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Experiment</title>
+    <title>Min Max</title>
     <link rel="stylesheet" href="exp.css">
   </head>
   <body>
     <div id="main">
       <!-- area for columns -->
+      <span id="hint">Click Start</span>
       <div id="column-area">
 
       </div>
+    </div>
+    <!-- show level/time/start button -->
+    <div id="status-bar">
+      <span id="time">Countdown: <span>30</span></span>
+      <button onclick="startGame()">Start</button>
+      <span id="level">Level: <span>0</span></span>
     </div>
 
     <script src="exp.js" charset="utf-8"></script>
