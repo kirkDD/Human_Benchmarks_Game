@@ -25,7 +25,7 @@ function createLevel(numColumns) {
     // style the column
     innerBar.style.backgroundColor = colorToString(255 * Math.random(), 200, 255 * Math.random())
     // for css drop shadow
-    innerBar.style.color = innerBar.style.backgroundColor 
+    innerBar.style.color = innerBar.style.backgroundColor
   }
   // actual value
   // make random numbers and show them
@@ -54,13 +54,15 @@ function barClicked(e) {
   // check if max and min are both clicked
   if (MAX === e.myRandVal) {
     MAX = -1
+    e.style.filter = 'brightness(40%)'
   } else if (MIN === e.myRandVal) {
     MIN = -1
+    e.style.filter = 'brightness(40%)'
   } else {
+    e.style.filter = 'brightness(10%)'
     numErrorClicks++
   }
   // show its clicked
-  e.style.filter = 'brightness(0.3)'
   if (MAX === -1 && MIN === -1) {
     // done
     completeLevel(Date.now())
