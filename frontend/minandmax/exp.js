@@ -23,7 +23,10 @@ function createLevel(numColumns) {
     bar.appendChild(innerBar)
     innerBar.style.height = '0%'
     // style the column
-    innerBar.style.backgroundColor = colorToString(255 * Math.random(), 200, 255 * Math.random())
+    innerBar.style.backgroundColor = colorToString(
+      40 + 215 * Math.random(),
+      40 + 215 * Math.random(),
+      40 + 215 * Math.random())
     // for css drop shadow
     innerBar.style.color = innerBar.style.backgroundColor
   }
@@ -114,6 +117,8 @@ function endGame() {
   hintEl.innerText = 'Score: ' +
     (currentLevel - numErrorClicks)
   hintEl.style.opacity = 1
+  // send data to server
+  // todo
 }
 
 // helpers
