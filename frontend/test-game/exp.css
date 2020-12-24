@@ -24,8 +24,6 @@ html, body {
 }
 
 .column {
-  /* background-color: #eee; */
-  /* border: 2px solid red; */
   height: 100%;
   position: relative;
 }
@@ -40,4 +38,9 @@ html, body {
   width: 70%;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  height: 0%;
+  transition: height 0.5s;
+}
+.column:hover div {
+  filter: brightness(150%);
 }
