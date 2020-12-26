@@ -7,9 +7,9 @@ cd "./backend/database"
 ./initDB.sh
 if [ $? -eq 0 ]
 then 
-	echo "$PREF db create failed"
-else
 	echo "$PREF db created"
+else
+	echo "$PREF db create failed"
 fi
 cd "../../"
 echo "$PREF done, exiting"
