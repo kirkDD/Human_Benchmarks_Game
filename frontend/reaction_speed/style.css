@@ -1,0 +1,19 @@
+h1 {
+    color:rgb(7, 7, 7);
+    font-size: 40px;
+    text-align: center;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+}
+#click_area {
+    background-color: rgb(57, 184, 243);
+    width: 100%;
+    height: 1000px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    font-size: 60px;
+}
+
