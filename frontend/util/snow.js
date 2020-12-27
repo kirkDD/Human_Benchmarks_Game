@@ -7,7 +7,7 @@
 // use absolute path to css
 const repoName = "Human_Benchmarks_Game"
 var rootIndex = window.location.href.indexOf(repoName)
-var absPath = window.location.href.substr(0, rootIndex + repoName.length)
+var absPath = window.location.href.substr(0, rootIndex + repoName.length + 1)
 var cssPath = absPath + '/frontend/util/snow.css'
 var head = document.getElementsByTagName('HEAD')[0];
 head.innerHTML += '<link rel="stylesheet" href="' + cssPath + '">'
