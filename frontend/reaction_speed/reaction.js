@@ -4,8 +4,8 @@ var clickArea = document.getElementById("click_area");
 function startGame() {
     clickArea.innerHTML = "Wait for green...";
     clickArea.style.background = "Brown";
-    var randomTime =  Math.random() * 70000 + 30000;
-    setTimeout(turnGreen(), randomTime);
+    var randomTime =  Math.random() * 7000 + 3000;
+    setTimeout(turnGreen, randomTime);
     clickArea.onclick = redOnclick;
 }
 
@@ -14,4 +14,5 @@ function redOnclick() {
 
 function turnGreen() {
     clickArea.style.background = "Aquamarine";
+    clickArea.innerHTML = "Now!!!";
 }
