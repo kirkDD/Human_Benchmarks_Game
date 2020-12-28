@@ -3,6 +3,9 @@ var clickArea = document.getElementById("click_area");
 var turnedGreen;
 var startTime;
 var endTime;
+// to keep track of average
+var totalScore = 0.0;
+var numTry = 0;
 // start the game after user clicks the button
 function startGame() {
     turnedGreen = false;
@@ -22,7 +25,13 @@ function redOnclick(timer) {
     if (!turnedGreen) {
         clickArea.innerHTML = "Clicked too soon!<br>Click to keep going";
     } else {
-        clickArea.innerHTML = "" + (endTime - startTime) + " ms<br>Click to keep going";
+        totalScore += (endTime - startTime);
+        numTry++;
+        var text = "" + (endTime - startTime) + " ms<br>Click to keep going";
+        var avg = totalScore / numTry;
+        text += "<br><br>Average in " + numTry
+        + (numTry < 2? " try: " : " tries: ") + avg + "ms";
+        clickArea.innerHTML = text;
     }
     clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
     // set onclick to restart game
