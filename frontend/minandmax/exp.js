@@ -118,7 +118,6 @@ function endGame() {
   hintEl.innerText = 'Score: ' + score
   hintEl.style.opacity = 1
   // send data to server
-  // todo
   // a post request by server design
   fetch("../../backend/php/server.php", {
     method: 'POST',

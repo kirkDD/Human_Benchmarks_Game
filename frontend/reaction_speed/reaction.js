@@ -35,6 +35,7 @@ function redOnclick() {
         text += "<br><br>Average in " + numTry
         + (numTry < 2? " try: " : " tries: ") + avg + "ms";
         clickArea.innerHTML = text;
+        sendScore("clickReaction", avg)
     }
     clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
     // set onclick to restart game
@@ -61,4 +62,14 @@ function homeScreen() {
     + "CLICK!<br>Click anywhere to start";
     clickArea.onclick = startGame;
     clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
+}
+
+function sendScore(gameName, score) {
+  fetch("../../backend/php/server.php", {
+    method: 'POST',
+    body: JSON.stringify({
+      game_name: gameName,
+      score: score
+    })
+  })
 }

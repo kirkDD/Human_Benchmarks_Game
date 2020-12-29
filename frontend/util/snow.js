@@ -38,6 +38,7 @@ setInterval(() => {
     var scale = 0.5 + randValue(0.5)
     spec.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'
       + 'scale(' + scale + ')'
+    spec.style.filter = 'blur(' + (scale/2) + 'px)'
   })
 }, 5000); // has to match css
 
