@@ -1,23 +1,22 @@
 
 
 const column_area = document.getElementById('column-area')
-var MAX = null
-var MIN = null
-// var START_TIME = null
+let MAX = null
+let MIN = null
 
 function createLevel(numColumns) {
   // clear content
   column_area.innerHTML = ''
-  for (var i = 0; i < numColumns; i++) {
+  for (let i = 0; i < numColumns; i++) {
     // new bar
-    var bar = document.createElement('div')
+    let bar = document.createElement('div')
     // add to DOM
     column_area.appendChild(bar)
     bar.className = 'column'
     bar.addEventListener('click', barClicked)
     bar.style.width = 100 / numColumns + '%'
     // inner bar
-    var innerBar = document.createElement('div')
+    let innerBar = document.createElement('div')
     bar.appendChild(innerBar)
     innerBar.style.height = '0%'
     // style the column
@@ -34,13 +33,12 @@ function createLevel(numColumns) {
     MAX = 0
     MIN = 100
     document.querySelectorAll('.column div').forEach(innerBar => {
-      var randVal = Math.floor(Math.random() * 40) * 2 + 20
+      let randVal = Math.floor(Math.random() * 40) * 2 + 20
       MAX = Math.max(MAX, randVal)
       MIN = Math.min(MIN, randVal)
       innerBar.style.height = randVal + '%'
       innerBar.myRandVal = randVal
     });
-    // START_TIME = Date.now()  // track time
   }, 60)  // wait some time for animation
 
 }
@@ -66,54 +64,61 @@ function barClicked(e) {
   // show its clicked
   if (MAX === -1 && MIN === -1) {
     // done
-    completeLevel(Date.now())
+    completeLevel()
   }
 }
 
-function completeLevel(timeSpent) {
-  // console.log(timeSpent)
-  levelEle.innerText = ++currentLevel
-  createLevel(NUM_BAR++)
+function completeLevel() {
+  // complete when currentLevel == 8
+  if (currentLevel === 8) {
+    endGame()
+  } else {
+    levelEle.innerText = ++currentLevel
+    createLevel(NUM_BAR++)
+  }
 }
 
-var NUM_BAR = 10
-var timerID = null
-var timeLeft = 0
-var currentLevel = 1
-var numErrorClicks = 0
-const timeEle = document.getElementById('time')
+let START_TIME = null
+let NUM_BAR = 10
+let timeSpent = 0
+let currentLevel = 1
+let numErrorClicks = 0
+const timeEle = document.querySelectorAll('#time span')[0]
 const levelEle = document.querySelectorAll('#level span')[0]
+const hintEl = document.getElementById('hint')
+let timerIDSec = null
 function startGame() {
   // hide hint text
-  document.getElementById('hint').style.opacity = 0
+  hintEl.style.opacity = 0
   // start fresh
-  clearInterval(timerID)
+  clearInterval(timerIDSec)
   NUM_BAR = 10
-  timeLeft = 30
   currentLevel = 1
   numErrorClicks = 0
+  timeSpent = 0
   // display
   levelEle.innerText = currentLevel
-  timeEle.innerText = 'Countdown: ' + timeLeft
+  timeEle.innerText = timeSpent
   // start counting
-  timerID = setInterval(() => {
-    timeLeft -= 1
-    timeEle.innerText = 'Countdown: ' + timeLeft
-    if (timeLeft === 0) {
-      clearInterval(timerID)
+  timerIDSec = setInterval(() => {
+    timeEle.innerText = ++timeSpent
+    if (timeSpent > 30) { // too much time spent
       // end game
       endGame()
     }
   }, 1000)
-  createLevel(NUM_BAR++)
+  START_TIME = Date.now()  // track time
+  createLevel(NUM_BAR)
 }
 
 function endGame() {
   // clear and show score
+  let totalTime = Date.now() - START_TIME
+  clearInterval(timerIDSec)
   column_area.innerHTML = ''
-  var hintEl = document.getElementById('hint')
-  var score = currentLevel - numErrorClicks
-  hintEl.innerText = 'Score: ' + score
+  hintEl.innerText = 'Total Time: ' +
+    Math.floor(totalTime / 1000) + "." +
+    (totalTime % 1000) + 's'
   hintEl.style.opacity = 1
   // send data to server
   // a post request by server design
@@ -121,10 +126,10 @@ function endGame() {
     method: 'POST',
     body: JSON.stringify({
       game_name: "minandmax",
-      score: score
+      score: totalTime + numErrorClicks //penalty
     })
   })
 }
 
 // helpers
-var colorToString = (r, g, b) => { return 'rgb(' + r + ',' + g + ',' + b + ')'}
+let colorToString = (r, g, b) => { return 'rgb(' + r + ',' + g + ',' + b + ')'}

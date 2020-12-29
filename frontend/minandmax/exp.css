@@ -10,8 +10,21 @@ html, body {
   box-sizing: content-box;
 }
 
+body {
+  height: 100vh;
+  min-height: 500px;
+}
+
 #main {
-  padding: 20px;
+  position: relative;
+  height: 80%;
+}
+
+h1 {
+  margin-top: 0;
+  padding: 10px 0;
+  text-align: center;
+  background-color: #000;
 }
 
 #hint {
@@ -19,18 +32,18 @@ html, body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -100%);
-  font-size: 5em;
+  transform: translate(-50%, -50%);
+  font-size: 4em;
+  text-align: center;
 }
 
 #column-area {
   display: flex;
   justify-content: space-between;
   margin: auto;
-  width: 80%;
   max-width: 800px;
-  height: 80vh;
-  border: 2px solid #ff0;
+  height: 100%;
+  border-bottom: 2px solid #ff0;
 }
 
 .column {
@@ -59,7 +72,7 @@ html, body {
 /* controls and display */
 #status-bar {
   font-size: 1.5em;
-  margin: 0 100px;
+  margin: 10px 100px;
   display: flex;
   justify-content: space-around;
   vertical-align: middle;
