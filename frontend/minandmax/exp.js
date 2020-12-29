@@ -1,7 +1,4 @@
 
-
-console.log("debugging")
-
 const column_area = document.getElementById('column-area')
 var MAX = null
 var MIN = null
