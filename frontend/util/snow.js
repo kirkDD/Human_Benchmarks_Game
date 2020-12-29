@@ -2,6 +2,7 @@
 // alert("af")
 // how to make it snow?
 // add some elements
+console.log("it's snowing")
 
 // add css
 // use absolute path to css
