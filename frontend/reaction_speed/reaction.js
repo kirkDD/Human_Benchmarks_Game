@@ -16,11 +16,11 @@ function startGame() {
     var randomTime =  Math.random() * 4000 + 2000;
     var greenTimer = setTimeout(turnGreen, randomTime);
     timer = greenTimer;
-    // change the onclick
-    clickArea.onclick = redOnclick;
+    // change mousedown listener
+    clickArea.onmousedown = redOnMousedown;
 }
 
-function redOnclick() {
+function redOnMousedown() {
     endTime = new Date().getTime();
     if (timer != null)
         clearTimeout(timer);
@@ -38,8 +38,8 @@ function redOnclick() {
         sendScore("clickReaction", avg)
     }
     clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
-    // set onclick to restart game
-    clickArea.onclick = startGame;
+    // set onmousedown to restart game
+    clickArea.onmousedown = startGame;
 }
 
 function turnGreen() {
@@ -60,7 +60,7 @@ function clearFun() {
 function homeScreen() {
     clickArea.innerHTML = "When the red box turns green, "
     + "CLICK!<br>Click anywhere to start";
-    clickArea.onclick = startGame;
+    clickArea.onmousedown = startGame;
     clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
 }
 
