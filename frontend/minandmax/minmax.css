@@ -90,6 +90,12 @@ h1 {
 /* graph */
 
 .stats {
-  height: 100px;
+  margin-top: 40px;
   /* background-color: #eee; */
+}
+
+.stat-graph {
+  display: block;
+  margin: auto;
+  border: 2px solid red;
 }

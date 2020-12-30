@@ -128,3 +128,19 @@ function endGame() {
 
 // hook up listeners
 document.getElementById('start-button').onclick = startGame
+
+
+// draw game stats
+let graphEl = document.querySelector('svg.stat-graph')
+console.log(graphEl)
+// data is [{}, {}]
+function populateGraph(dataArr) {
+  console.log(dataArr)
+}
+
+// test graph
+let phpUrl = "http://students.washington.edu/leol15" +
+  "/x/Human_Benchmarks_Game/backend/php/server.php"
+fetch(phpUrl + "?game_name=minandmax")
+  .then(data => data.json())
+  .then(json => populateGraph(json))
