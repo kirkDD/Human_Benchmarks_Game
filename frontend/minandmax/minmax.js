@@ -14,6 +14,7 @@ function createLevel(numColumns) {
     column_area.appendChild(bar)
     bar.className = 'column'
     bar.addEventListener('click', barClicked)
+    bar.addEventListener('touchstart', barClicked) // mobile
     bar.style.width = 100 / numColumns + '%'
     // inner bar
     let innerBar = document.createElement('div')
@@ -123,9 +124,6 @@ function endGame() {
   // send data to server
   // a post request by server design
   Util.sendResult("minandmax", totalTime + numErrorClicks)
-  Util.fetchGameData("minandmax")
-    .then(data => data.json())
-    .then(json => console.log(json))
 }
 
 // hook up listeners
