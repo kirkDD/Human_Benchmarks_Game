@@ -31,7 +31,7 @@ class Util {
   }
 
   fetchGameData(game_name, limit=50) {
-    fetch(this.rootPath() + "/backend/php/server.php?"+
+    return fetch(this.rootPath() + "/backend/php/server.php?"+
       "game_name=" + game_name + "&limit=" + limit)
   }
 
