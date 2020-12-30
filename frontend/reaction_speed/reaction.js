@@ -45,7 +45,7 @@ function redOnMousedown() {
 
 function turnGreen() {
     turnedGreen = true;
-    clickArea.style.background = "DarkSeaGreen";
+    clickArea.style.background = 'rgb(' + 138 + ',' + 190 + ',' + 40 + ')';;
     clickArea.innerHTML = "Now!!!";
     startTime = new Date().getTime();
 }
