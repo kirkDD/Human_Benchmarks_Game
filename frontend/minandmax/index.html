@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>Min Max</title>
-    <link rel="stylesheet" href="exp.css">
+    <link rel="stylesheet" href="minmax.css">
   </head>
   <body>
     <h1>Find Max and Min</h1>
@@ -19,11 +19,13 @@
     <!-- show level/time/start button -->
     <div id="status-bar">
       <span id="time">Time: <span>0</span></span>
-      <button onclick="startGame()">Start</button>
+      <button id="start-button">Start</button>
       <span id="level">Level: <span>0</span></span>
     </div>
+    <div class="stats">
 
-    <script src="exp.js" charset="utf-8"></script>
-    <script src="../util/snow.js" charset="utf-8"></script>
+    </div>
+    <script src="minmax.js" type="module" charset="utf-8"></script>
+    <script src="../util/snow.js" type="module" charset="utf-8"></script>
   </body>
 </html>

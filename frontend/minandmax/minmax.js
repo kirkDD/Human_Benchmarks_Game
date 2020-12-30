@@ -1,4 +1,4 @@
-
+import Util from "../util/util.js"
 
 const column_area = document.getElementById('column-area')
 let MAX = null
@@ -20,7 +20,7 @@ function createLevel(numColumns) {
     bar.appendChild(innerBar)
     innerBar.style.height = '0%'
     // style the column
-    innerBar.style.backgroundColor = colorToString(
+    innerBar.style.backgroundColor = Util.RGBStr(
       40 + 215 * Math.random(),
       40 + 215 * Math.random(),
       40 + 215 * Math.random())
@@ -122,14 +122,11 @@ function endGame() {
   hintEl.style.opacity = 1
   // send data to server
   // a post request by server design
-  fetch("../../backend/php/server.php", {
-    method: 'POST',
-    body: JSON.stringify({
-      game_name: "minandmax",
-      score: totalTime + numErrorClicks //penalty
-    })
-  })
+  Util.sendResult("minandmax", totalTime + numErrorClicks)
+  Util.fetchGameData("minandmax")
+    .then(data => data.json())
+    .then(json => console.log(json))
 }
 
-// helpers
-let colorToString = (r, g, b) => { return 'rgb(' + r + ',' + g + ',' + b + ')'}
+// hook up listeners
+document.getElementById('start-button').onclick = startGame
