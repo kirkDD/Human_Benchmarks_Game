@@ -36,7 +36,7 @@ function redOnMousedown() {
         var avg = (totalScore / numTry).toFixed(2);
         document.getElementById("average_time").innerHTML = "Average: " + avg + "ms";
         document.getElementById("num_tries").innerHTML = "Attempts: " +numTry;
-        sendScore("clickReaction", avg)
+        sendScore("clickReaction", endTime - startTime) // send individual scores
     }
     clickArea.style.background = backgroundColor;
     // set onmousedown to restart game

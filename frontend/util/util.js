@@ -35,6 +35,14 @@ class Util {
       "game_name=" + game_name + "&limit=" + limit)
   }
 
+  createSvgEl(tag_name, attrs) {
+    let svgEl = document.createElementNS("http://www.w3.org/2000/svg", tag_name);
+    for (const [key, value] of Object.entries(attrs)) {
+      svgEl.setAttribute(key, value)
+    }
+    return svgEl
+  }
+
 }
 
 export default new Util();

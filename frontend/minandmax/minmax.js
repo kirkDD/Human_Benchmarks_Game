@@ -132,15 +132,59 @@ document.getElementById('start-button').onclick = startGame
 
 // draw game stats
 let graphEl = document.querySelector('svg.stat-graph')
-console.log(graphEl)
-// data is [{}, {}]
+// data is [{score: , server_time: }, {}]
 function populateGraph(dataArr) {
-  console.log(dataArr)
+  console.log(dataArr.length, "data")
+  // bucket the data, ignore the time
+  let max = -1e9
+  let min = 1e9
+  dataArr.forEach((item, i) => {
+    if (item.score > 1000)
+      item.score /= 1000
+    max = Math.max(max, item.score)
+    min = Math.min(min, item.score)
+  });
+  let numBins = 10
+  let binWidth = (max - min) / numBins + 1  // + 1 for floor
+  let bins = []
+  let bin_markers = []
+  for (let i = 0; i < numBins; i++) {
+    bins.push(0)
+    bin_markers.push(min + (i + 0.5) * binWidth)
+  }
+  dataArr.forEach((item, i) => {
+    let idx = Math.floor((item.score - min) / binWidth)
+    bins[idx]++
+  });
+  // draw bins
+  graphHistogram(bins, bin_markers)
+}
+
+function graphHistogram(hist, bin_labels) {
+  let max = -1e9
+  hist.forEach((item, i) => {
+    max = Math.max(max, item)
+  });
+  // draw a percent of max
+  let dx = 400 / hist.length
+  let attrs = {stroke: "red", "stroke-width": 5, y1: 250}
+  for (let i = 0; i < hist.length; i++) {
+    let x = i * dx + 50
+    let txtEl = Util.createSvgEl("text", {x: x - 15, y: 280, stroke:'red'})
+    txtEl.innerHTML = Math.round(bin_labels[i])
+    graphEl.appendChild(txtEl)
+    if (!hist[i]) continue;
+    attrs["x1"] = x
+    attrs["x2"] = x
+    // top of bar
+    attrs["y2"] = 300 - (300 * (hist[i] / max))
+    graphEl.appendChild(Util.createSvgEl("line", attrs))
+  }
 }
 
 // test graph
 let phpUrl = "http://students.washington.edu/leol15" +
   "/x/Human_Benchmarks_Game/backend/php/server.php"
-fetch(phpUrl + "?game_name=minandmax")
+fetch(phpUrl + "?game_name=clickReaction") // clickReaction
   .then(data => data.json())
   .then(json => populateGraph(json))
