@@ -7,6 +7,7 @@ var endTime;
 var totalScore = 0.0;
 var numTry = 0;
 var timer = null;
+var backgroundColor = 'rgb(' + 0 + ',' + 29 + ',' + 42 + ')';
 // start the game after user clicks the button
 function startGame() {
     turnedGreen = false;
@@ -31,20 +32,20 @@ function redOnMousedown() {
         totalScore += (endTime - startTime);
         numTry++;
         var text = "" + (endTime - startTime) + " ms<br>Click to keep going";
-        var avg = (totalScore / numTry).toFixed(2);
-        text += "<br><br>Average in " + numTry
-        + (numTry < 2? " try: " : " tries: ") + avg + "ms";
         clickArea.innerHTML = text;
+        var avg = (totalScore / numTry).toFixed(2);
+        document.getElementById("average_time").innerHTML = "Average: " + avg + "ms";
+        document.getElementById("num_tries").innerHTML = "Attempts: " +numTry;
         sendScore("clickReaction", avg)
     }
-    clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
+    clickArea.style.background = backgroundColor;
     // set onmousedown to restart game
     clickArea.onmousedown = startGame;
 }
 
 function turnGreen() {
     turnedGreen = true;
-    clickArea.style.background = "Aquamarine";
+    clickArea.style.background = "DarkSeaGreen";
     clickArea.innerHTML = "Now!!!";
     startTime = new Date().getTime();
 }
@@ -60,8 +61,10 @@ function clearFun() {
 function homeScreen() {
     clickArea.innerHTML = "When the red box turns green, "
     + "CLICK!<br>Click anywhere to start";
+    document.getElementById("average_time").innerHTML = "Average: NONE";
+    document.getElementById("num_tries").innerHTML = "Attempts: 0";
     clickArea.onmousedown = startGame;
-    clickArea.style.background = 'rgb(' + 57 + ',' + 184 + ',' + 243 + ')';
+    clickArea.style.background = backgroundColor;
 }
 
 function sendScore(gameName, score) {
