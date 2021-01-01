@@ -31,8 +31,16 @@ class Util {
   }
 
   fetchGameData(game_name, limit=50) {
-    return fetch(this.rootPath() + "/backend/php/server.php?"+
+    // intelligent fetch?
+    if (this.rootPath() === "http://127.0.0.1:3000") {
+      // local!
+      return fetch("http://students.washington.edu/leol15" +
+        "/x/Human_Benchmarks_Game/backend/php/server.php?" +
+        "game_name=" + game_name + "&limit=" + limit)
+    } else {
+      return fetch(this.rootPath() + "/backend/php/server.php?"+
       "game_name=" + game_name + "&limit=" + limit)
+    }
   }
 
   createSvgEl(tag_name, attrs) {
@@ -41,6 +49,22 @@ class Util {
       svgEl.setAttribute(key, value)
     }
     return svgEl
+  }
+
+  formatUnixTime(UNIX_timestamp) {
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    if ((hour + "").length == 1) hour = "0" + hour
+    var min = a.getMinutes();
+    if ((min + "").length == 1) min = "0" + min
+    var sec = a.getSeconds();
+    if ((sec + "").length == 1) sec = "0" + sec
+    var time = month + ' ' + date + ' ' + year + ', ' + hour + ':' + min + ':' + sec ;
+    return time;
   }
 
 }
