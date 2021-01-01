@@ -19,7 +19,6 @@
   animation: falling linear infinite;
   transition: all 5s;
   transition-timing-function: cubic-bezier(.73,.3,.55,.93);
-  box-shadow: 0 0 2px #eee;
 }
 
 @keyframes falling {
