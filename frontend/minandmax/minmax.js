@@ -133,7 +133,7 @@ document.getElementById('start-button').onclick = startGame
 // draw game stats
 let graphEl = document.querySelector('svg.stat-graph')
 // data is [{score: , server_time: }, {}]
-function populateGraph(dataArr) {
+function populateGraph(dataArr, numBins) {
   console.log(dataArr.length, "data")
   // bucket the data, ignore the time
   let max = -1e9
@@ -144,47 +144,77 @@ function populateGraph(dataArr) {
     max = Math.max(max, item.score)
     min = Math.min(min, item.score)
   });
-  let numBins = 10
-  let binWidth = (max - min) / numBins + 1  // + 1 for floor
+  let newmax = Math.ceil(max / 100) * 100
+  if (newmax - max > 50) {
+    max = newmax - 50
+  } else {
+    max = newmax
+  }
+  min = Math.floor(min / 100) * 100
+  let binWidth = (max - min) / numBins  // + 1 for floor
   let bins = []
   let bin_markers = []
   for (let i = 0; i < numBins; i++) {
     bins.push(0)
-    bin_markers.push(min + (i + 0.5) * binWidth)
+    bin_markers.push(Math.round(min + i * binWidth))
   }
   dataArr.forEach((item, i) => {
     let idx = Math.floor((item.score - min) / binWidth)
     bins[idx]++
   });
   // draw bins
-  graphHistogram(bins, bin_markers)
+  graphHistogram(bins, bin_markers, 800, 300)
 }
 
-function graphHistogram(hist, bin_labels) {
+// graph area width & height
+function graphHistogram(hist, bin_labels, width, height) {
   let max = -1e9
   hist.forEach((item, i) => {
     max = Math.max(max, item)
   });
   // draw a percent of max
-  let dx = 400 / hist.length
-  let attrs = {stroke: "red", "stroke-width": 5, y1: 250}
+  let barMaxHeight = Math.max(height * 0.8, height - 50)
+  let barBottom = height * 0.9
+  let drawingW = width * 0.8
+  let barWidth = drawingW / hist.length
   for (let i = 0; i < hist.length; i++) {
-    let x = i * dx + 50
-    let txtEl = Util.createSvgEl("text", {x: x - 15, y: 280, stroke:'red'})
+    let x = (i + 0.5) * barWidth + 0.1 * width
+    let txtEl = Util.createSvgEl("text", {x: x - 10, y: height - 5})
     txtEl.innerHTML = Math.round(bin_labels[i])
     graphEl.appendChild(txtEl)
-    if (!hist[i]) continue;
-    attrs["x1"] = x
-    attrs["x2"] = x
     // top of bar
-    attrs["y2"] = 300 - (300 * (hist[i] / max))
-    graphEl.appendChild(Util.createSvgEl("line", attrs))
+    let attrs = {"stroke-width": barWidth - 2,
+      x1: x, y1: barBottom,
+      x2: x, y2: barBottom - (barMaxHeight * (hist[i] / max))}
+    let rectAttr = {x: x - barWidth / 2 + 5,
+      y: barBottom - (barMaxHeight * (hist[i] / max)),
+      width: barWidth - 4, height: (barMaxHeight * (hist[i] / max))}
+    let barEl = Util.createSvgEl("rect", rectAttr)
+    graphEl.appendChild(barEl
+    )
+  }
+
+  // draw the left legend using 10% width
+  for (let i = 0; i < max + 1; i++) {
+    let txtEl = Util.createSvgEl("text", {x: 0.05 * width,
+      y: barBottom - barMaxHeight * (i / max),
+      "font-size": '2em'})
+    txtEl.innerHTML = i
+    graphEl.appendChild(txtEl)
   }
 }
 
 // test graph
-let phpUrl = "http://students.washington.edu/leol15" +
+if (Util.rootPath() === "http://127.0.0.1:3000") {
+  let phpUrl = "http://students.washington.edu/leol15" +
   "/x/Human_Benchmarks_Game/backend/php/server.php"
-fetch(phpUrl + "?game_name=clickReaction") // clickReaction
+  fetch(phpUrl + "?game_name=clickReaction") // clickReaction
   .then(data => data.json())
-  .then(json => populateGraph(json))
+  .then(json => populateGraph(json, 15))
+}
+
+// draw graphHistogram
+fetch(Util.rootPath() + "/backend/php/server.php?game_name=minandmax")
+  .then(data => data.json())
+  .then(json => populateGraph(json, 15))
+  .catch(e => console.log(e))

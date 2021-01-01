@@ -37,6 +37,10 @@ setInterval(() => {
     var scale = 0.5 + Util.randVal(0.5)
     spec.style.transform = 'translate(' + dx + 'px,' + dy + 'px)'
       + 'scale(' + scale + ')'
-    spec.style.filter = 'blur(' + (scale/2) + 'px)'
+    // spec.style.filter = 'blur(' + (scale/2) + 'px)'
+    spec.style.backgroundColor = Util.RGBStr(
+      40 + Util.randVal(215),
+      40 + Util.randVal(215),
+      40 + Util.randVal(215))
   })
 }, 5000); // has to match css

@@ -96,5 +96,16 @@ h1 {
 .stat-graph {
   display: block;
   margin: auto;
-  /* border: 2px solid red; */
+  border: 2px solid red;
+}
+
+.stat-graph {
+  stroke: yellow;
+  font-size: 0.8em;
+}
+
+.stat-graph rect {
+  stroke: yellow;
+  stroke-width: 2;
+  fill: #4b3;
 }
